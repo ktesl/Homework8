@@ -44,7 +44,6 @@ public class Employee {
     }
 
     public String performanceReport() {
-        if (jobTitle.equals("Manager")) {
             if (salary < 1500) {
                 return "Performance report for " + jobTitle + " " + name + " -> Bad";
             }
@@ -54,27 +53,6 @@ public class Employee {
             if (salary > 3000) {
                 return "Performance report for " + jobTitle + " " + name + " -> Very good";
             }
-        } else if (jobTitle.equals("Developer")) {
-            if (salary < 3500) {
-                return "Performance report for " + jobTitle + " " + name + " -> Bad";
-            }
-            if (salary >= 3500 && salary <= 5000) {
-                return "Performance report for " + jobTitle + " " + name + " -> Good";
-            }
-            if (salary > 5000) {
-                return "Performance report for " + jobTitle + " " + name + " -> Very good";
-            }
-        } else if (jobTitle.equals("QA")) {
-            if (salary < 1500) {
-                return "Performance report for " + jobTitle + " " + name + " -> Bad";
-            }
-            if (salary >= 1500 && salary <= 3000) {
-                return "Performance report for " + jobTitle + " " + name + " -> Good";
-            }
-            if (salary > 3000) {
-                return "Performance report for " + jobTitle + " " + name + " -> Very good";
-            }
-        }
         return null;
     }
 

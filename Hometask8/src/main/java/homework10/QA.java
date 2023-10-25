@@ -10,4 +10,18 @@ public class QA extends Employee {
 
         return 0.075 * salary;
     }
+
+    @Override
+    public String performanceReport(){
+        if (salary < 1500) {
+            return "Performance report for " + jobTitle + " " + name + " -> Bad";
+        }
+        if (salary >= 1500 && salary <= 3000) {
+            return "Performance report for " + jobTitle + " " + name + " -> Good";
+        }
+        if (salary > 3000) {
+            return "Performance report for " + jobTitle + " " + name + " -> Very good";
+        }
+        return null;
+    }
 }
