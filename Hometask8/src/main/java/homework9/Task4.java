@@ -8,7 +8,7 @@ public class Task4 {
 
     public static boolean validatePhoneNumber(String phoneNumber) {
 
-        String regex = "\\+38\\(0[0-9]{2}\\)[0-9]{6}";
+        String regex = "\\+38\\(0[0-9]{2}\\)[0-9]{7}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(phoneNumber);
 
