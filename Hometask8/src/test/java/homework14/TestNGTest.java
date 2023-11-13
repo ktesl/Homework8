@@ -10,11 +10,6 @@ import static org.testng.Assert.*;
 
 public class TestNGTest {
 
-    Task1 task1 = new Task1();
-    Task2 task2 = new Task2();
-    Task3 task3 = new Task3();
-    Task4 task4 = new Task4();
-
     @BeforeClass
     public void beforeClass(){
         System.out.println("Before class");
@@ -41,27 +36,27 @@ public class TestNGTest {
     }
 
     @Test(groups = {"remove"})
-    public void removePositive(){
+    public void removeCharactersPositive(){
         assertEquals("Java, Wor!", Task2.remove("Java, World!", "ld"));
     }
 
     @Test(groups = {"remove"})
-    public void removeNegative(){
+    public void removeFromNullNegative(){
         assertNull(null);
     }
 
     @Test(groups = {"remove"})
-    public void removeNegative2(){
+    public void removeNullNegative(){
         assertEquals("Java, World!", Task2.remove("Java, World!", null));
     }
 
     @Test(groups = {"remove"})
-    public void removePositive2(){
+    public void removeSymbolsPositive(){
         assertEquals("bc4efbc12ebc", Task3.remove("abcd4efabc123deabcdaaa", "ad3"));
     }
 
     @Test(groups = {"remove"})
-    public void removeNegative3(){
+    public void removeSymbolsFromNullNegative(){
         assertNull(null);
     }
 
