@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class UITestsDemo {
     WebDriver driver;
@@ -20,6 +21,7 @@ public class UITestsDemo {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://www.bstackdemo.com/");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @AfterMethod
@@ -31,28 +33,32 @@ public class UITestsDemo {
 
     String quantityOfProducts = "2";
     String product1Name = "iPhone 12 Pro Max";
-    String xpathExpression1 = String.format("//p[text()='%s']/following-sibling::div[@class='shelf-item__buy-btn']", product1Name);
+    String product2Name = "iPhone XS Max";
+
+    private String generateXpathExpression(String productName) {
+        return String.format("//p[text()='%s']/following-sibling::div[@class='shelf-item__buy-btn']", productName);
+    }
+    String xpathExpression1 = generateXpathExpression(product1Name);
+    String xpathExpression2 = generateXpathExpression(product2Name);
 
     double product1Price = 1099.00;
     double product2Price = 649.00;
-    String product2Name = "iPhone XS Max";
-    String xpathExpression2 = String.format("//p[text()='%s']/following-sibling::div[@class='shelf-item__buy-btn']", product2Name);
     String[] productsNames = {product1Name, product2Name};
     double[] productsPrices = {product1Price, product2Price};
 
     @Test
     public void checkAddToCart() throws InterruptedException {
         WebElement phone1 = driver.findElement(By.xpath(xpathExpression1));
-        Thread.sleep(1000);
+
         phone1.click();
 
-        WebElement cartCloseBtn = driver.findElement(By.xpath("//div[@class='float-cart__close-btn']"));
+        WebElement cartCloseBtn = driver.findElement(By.className("float-cart__close-btn"));
         cartCloseBtn.click();
 
         WebElement phone2 = driver.findElement(By.xpath(xpathExpression2));
         phone2.click();
 
-        WebElement quantity = driver.findElement(By.xpath("//span[@class='bag__quantity']"));
+        WebElement quantity = driver.findElement(By.className("bag__quantity"));
         String quantityProducts = quantity.getText();
 
         Assert.assertEquals(quantityProducts, quantityOfProducts);
@@ -61,7 +67,7 @@ public class UITestsDemo {
 
         List<WebElement> prices = driver.findElements(By.xpath("//div[@class='shelf-item__price']//p"));
 
-        WebElement subTotal = driver.findElement(By.xpath("//p[@class='sub-price__val']"));
+        WebElement subTotal = driver.findElement(By.className("sub-price__val"));
 
         for (int i = 0; i < products.size(); i++) {
             Assert.assertEquals(products.get(i).getText(), productsNames[i]);
@@ -82,9 +88,7 @@ public class UITestsDemo {
         WebElement phone1 = driver.findElement(By.xpath(xpathExpression1));
         phone1.click();
 
-        Thread.sleep(200);
-
-        WebElement deleteItem = driver.findElement(By.xpath("//div[@class='shelf-item']//div[@class='shelf-item__del']"));
+        WebElement deleteItem = driver.findElement(By.className("shelf-item__del"));
         deleteItem.click();
 
         WebElement shelfEmpty = driver.findElement(By.xpath("//p[@class='shelf-empty' and text()='Add some products in the bag ']"));
@@ -93,7 +97,7 @@ public class UITestsDemo {
         WebElement continueShoppingBtn = driver.findElement(By.xpath("//div[@class='buy-btn'  and  text()='Continue Shopping']"));
         Assert.assertTrue(continueShoppingBtn.isDisplayed());
 
-        WebElement subTotal = driver.findElement(By.xpath("//p[@class='sub-price__val']"));
+        WebElement subTotal = driver.findElement(By.className("sub-price__val"));
         double priceTotal = Double.parseDouble(subTotal.getText().substring(2));
         Assert.assertEquals(priceTotal, 0.00);
     }
