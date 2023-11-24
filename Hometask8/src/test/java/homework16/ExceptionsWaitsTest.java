@@ -13,6 +13,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 public class ExceptionsWaitsTest {
@@ -39,7 +40,7 @@ public class ExceptionsWaitsTest {
         WebElement startBtn = driver.findElement(By.xpath("//button[text()='Start']"));
         startBtn.click();
 
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5);
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("finish")));
 
         Assert.assertEquals(text.getText(), "Hello World!");
@@ -53,7 +54,7 @@ public class ExceptionsWaitsTest {
         WebElement startBtn = driver.findElement(By.xpath("//button[text()='Start']"));
         startBtn.click();
 
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5);
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement text = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("finish")));
 
         Assert.assertEquals(text.getText(), "Hello World!");
@@ -66,14 +67,13 @@ public class ExceptionsWaitsTest {
         int iterations = 3;
         driver.get(url);
 
-        Wait<WebDriver> wait = new WebDriverWait(driver, 10);
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement addBoxBtn = driver.findElement(By.id("adder"));
         for (int i = 0; i < iterations; i++) {
             addBoxBtn.click();
             clicksCount++;
 
             List<WebElement> redboxes = wait.until(ExpectedConditions.numberOfElementsToBe(By.className("redbox"), clicksCount));
-            Assert.assertEquals(clicksCount, redboxes.size());
         }
 
         WebElement inputBtn = driver.findElement(By.id("reveal"));
@@ -81,7 +81,6 @@ public class ExceptionsWaitsTest {
             inputBtn.click();
 
             List<WebElement> inputs = wait.until(ExpectedConditions.numberOfElementsToBe(By.id("revealed"), 1));
-            Assert.assertEquals(1, inputs.size());
         }
     }
 }
