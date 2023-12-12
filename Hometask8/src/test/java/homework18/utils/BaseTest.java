@@ -1,6 +1,6 @@
 package homework18.utils;
 
-import homework18.pages.CheckoutPage;
+import homework18.pages.CheckoutStepTwoPage;
 import homework18.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -32,8 +32,8 @@ public class BaseTest {
         return new LoginPage(driver);
     }
 
-    public CheckoutPage checkout() {
+    public CheckoutStepTwoPage checkout() {
         driver.get("https://www.saucedemo.com/checkout-step-one.html");
-        return new CheckoutPage(driver);
+        return new CheckoutStepTwoPage(driver);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class InventoryPage extends BasePage {
     @FindBy(className = "title")
     WebElement title;
-    @FindBy(css = "div[class=\"inventory_item_price\"]")
+    @FindBy(css = "div[class='inventory_item_price']")
     List<WebElement> itemPrice;
 
     @FindBy(className = "shopping_cart_link")
@@ -33,13 +33,17 @@ public class InventoryPage extends BasePage {
         return String.valueOf(title.getText());
     }
 
+    public String replace(WebElement element, String target) {
+        return element.getText().replace(target, "");
+    }
+
     public WebElement getProductWithMaxPrices() {
 
         return itemPrice.stream()
                 .max((priceElement1, priceElement2) ->
                         Double.compare(
-                                Double.parseDouble(priceElement1.getText().replace("$", "")),
-                                Double.parseDouble(priceElement2.getText().replace("$", ""))
+                                Double.parseDouble(this.replace(priceElement1, "$")),
+                                Double.parseDouble(this.replace(priceElement2, "$"))
                         ))
                 .orElse(null);
     }
@@ -54,13 +58,10 @@ public class InventoryPage extends BasePage {
         return this;
     }
 
-    public String checkAddToCart() {
-        WebElement cartOpenBtn = cartLink;
-        cartOpenBtn.click();
+    public void checkAddToCart() {
+        cartLink.click();
         wait.until(ExpectedConditions.urlToBe(urlCart));
-        WebElement checkoutBtn = checkoutButton;
-        checkoutBtn.click();
+        checkoutButton.click();
         wait.until(ExpectedConditions.urlToBe(urlCheckoutStepOne));
-        return null;
     }
 }

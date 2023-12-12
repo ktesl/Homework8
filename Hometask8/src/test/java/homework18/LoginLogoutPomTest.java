@@ -1,15 +1,16 @@
 package homework18;
 
-import homework18.pages.CheckoutPage;
+import homework18.pages.CheckoutStepTwoPage;
 import homework18.pages.InventoryPage;
 import homework18.utils.BaseTest;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginLogoutPomTest extends BaseTest {
 
     @Test
-    public void LoginLogoutTest() {
+    public void loginLogoutTest() {
         String inventoryTitle = login()
                 .setUserName("standard_user")
                 .setPassword("secret_sauce")
@@ -19,26 +20,28 @@ public class LoginLogoutPomTest extends BaseTest {
     }
 
     @Test
-    public void BuyProductTest() {
+    public void buyProductTest() {
         InventoryPage inventoryPage = new InventoryPage(driver);
-        String inventoryLogin = login()
+        login()
                 .setUserName("standard_user")
                 .setPassword("secret_sauce")
                 .submit()
                 .addProductWithMaxPriceToCart()
                 .checkAddToCart();
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        CheckoutPage checkOut = checkout()
+        CheckoutStepTwoPage checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
+        checkout()
                 .setFirstName("Kate")
                 .setLastName("Smith")
                 .setPostalCode("98765")
                 .continueBtn()
                 .getCartOverview();
+        WebElement checkoutStepTwoPageText = checkoutStepTwoPage.summaryPrice;
+        WebElement maxPricesText = inventoryPage.getProductWithMaxPrices();
         Assert.assertEquals(
-                checkoutPage.summaryPrice.getText().replace("Item total: $", ""),
-                inventoryPage.getProductWithMaxPrices().getText().replace("$", "")
+                inventoryPage.replace(checkoutStepTwoPageText, "Item total: $"),
+                inventoryPage.replace(maxPricesText, "$")
         );
-        checkoutPage.finishBtn();
+        checkoutStepTwoPage.finishBtn();
     }
 }
 
