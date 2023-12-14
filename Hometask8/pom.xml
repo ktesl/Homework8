@@ -8,7 +8,9 @@
     <artifactId>maven</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties/>
+    <properties>
+        <env>homework19</env>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -27,6 +29,12 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.6.1</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -36,6 +44,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
+                    <systemPropertyVariables>
+                        <env>${env}</env>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
