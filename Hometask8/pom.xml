@@ -8,7 +8,9 @@
     <artifactId>maven</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties/>
+    <properties>
+        <env>homework19</env>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -36,6 +38,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
+                    <systemPropertyVariables>
+                        <env>${env}</env>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
