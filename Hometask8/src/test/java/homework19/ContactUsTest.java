@@ -5,6 +5,8 @@ import homework19.pages.ContactUsPage;
 import homework19.pages.MainPage;
 import org.testng.annotations.Test;
 
+import java.util.Properties;
+
 
 public class ContactUsTest extends BaseTest {
     @Test
@@ -12,12 +14,13 @@ public class ContactUsTest extends BaseTest {
         MainPage mainPage = new MainPage(driver);
         driver.get(mainPage.mainPageUrl);
         ContactUsPage contactUsPage = new ContactUsPage(driver);
-        mainPage.getContactUs();
-        contactUsPage.setInputName();
-        contactUsPage.setInputEmail();
-        contactUsPage.setInputSubject();
-        contactUsPage.setInputMessage();
-        contactUsPage.submitBtn.click();
+        Properties properties = new ConfigLoaderTest().getProperties();
+        mainPage.getContactUs(driver);
+        contactUsPage.setInputName(properties.getProperty("name"));
+        contactUsPage.setInputEmail(properties.getProperty("email", "234@fd.fd"));
+        contactUsPage.setInputSubject(properties.getProperty("subject", "123"));
+        contactUsPage.setInputMessage(properties.getProperty("message", "765"));
+        contactUsPage.submitBtn.submit();
         contactUsPage.acceptAlert();
     }
 }

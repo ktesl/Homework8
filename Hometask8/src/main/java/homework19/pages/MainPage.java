@@ -4,11 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MainPage extends BasePage {
     public String mainPageUrl = "https://automationexercise.com/";
-    static String contactUsUrl = "https://automationexercise.com/contact_us";
     @FindBy(css = "a[href='/contact_us']")
     WebElement contactUsLink;
 
@@ -17,8 +15,8 @@ public class MainPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void getContactUs() {
+    public ContactUsPage getContactUs(WebDriver driver) {
         contactUsLink.click();
-        wait.until(ExpectedConditions.urlToBe(contactUsUrl));
+        return new ContactUsPage(driver);
     }
 }
