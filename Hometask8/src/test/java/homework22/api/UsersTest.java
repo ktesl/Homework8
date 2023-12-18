@@ -15,8 +15,8 @@ public class UsersTest {
 
     @Test
     public void getSingleUserTestV2() {
-        UserIdDTO expectedId = new UserIdDTO(2);
-        Response response = usersService.getSingleUser();
+        UserIdDTO expectedId = new UserIdDTO(TestData.userId);
+        Response response = usersService.getSingleUser(TestData.userId);
 
         int userId = response.then()
                 .statusCode(200)
@@ -29,8 +29,8 @@ public class UsersTest {
     @Test
     public void getSingleUserNotFoundTestV2() {
         UserIdDTO expectedId = new UserIdDTO();
-        expectedId.setId(23);
-        Response response = usersService.getSingleUserNotFound();
+        expectedId.setId(TestData.userNotFoundId);
+        Response response = usersService.getSingleUserNotFound(TestData.userNotFoundId);
 
         response.then()
                 .statusCode(404)
@@ -54,7 +54,7 @@ public class UsersTest {
 
     @Test
     public void deleteDeleteTest() {
-        Response response = usersService.deleteDelete();
+        Response response = usersService.deleteDelete(TestData.userId);
 
         response.then()
                 .statusCode(204)

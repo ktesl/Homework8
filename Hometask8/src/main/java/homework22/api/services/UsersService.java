@@ -4,16 +4,16 @@ import homework22.api.dto.UserDTO;
 import io.restassured.response.Response;
 
 public class UsersService extends BaseService {
-    protected static final String usersPath = "/api/users";
+    protected static final String usersPath = "/api/users/";
 
-    public Response getSingleUser() {
+    public Response getSingleUser(int id) {
         return setRequestSpec().when()
-                .get(usersPath + "/2");
+                .get(usersPath + id);
     }
 
-    public Response getSingleUserNotFound() {
+    public Response getSingleUserNotFound(int id) {
         return setRequestSpec().when()
-                .get(usersPath + "/23");
+                .get(usersPath + id);
     }
 
     public Response postCreate(UserDTO user) {
@@ -22,8 +22,8 @@ public class UsersService extends BaseService {
                 .when().post(usersPath);
     }
 
-    public Response deleteDelete() {
+    public Response deleteDelete(int id) {
         return setRequestSpec().when()
-                .delete(usersPath + "/2");
+                .delete(usersPath + id);
     }
 }

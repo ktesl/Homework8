@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserResponseDTO {
-    @JsonProperty("id")
-    UserIdDTO id;
 
     @JsonProperty("name")
     private String name;
