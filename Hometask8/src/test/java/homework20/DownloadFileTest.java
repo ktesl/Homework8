@@ -10,14 +10,18 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 
 public class DownloadFileTest extends BaseTest {
+    String fileName = "csv file.csv";
     @Test
     public void downloadFileTest() {
         driver.get("https://the-internet.herokuapp.com/download");
-
-        String fileName = "csv file.csv";
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement chromeDriverFile =
@@ -26,7 +30,7 @@ public class DownloadFileTest extends BaseTest {
 
         Assert.assertTrue(waitFileDownloaded(DOWNLOAD_FOLDER_PATH, fileName, 10));
 
-        Assert.assertTrue(hasCorrectExtension(DOWNLOAD_FOLDER_PATH + "/" + fileName, ".zip"));
+        Assert.assertTrue(hasCorrectExtension(DOWNLOAD_FOLDER_PATH + "\\" + fileName, ".csv"));
     }
 
     public boolean hasCorrectExtension(String filePath, String extension) {
@@ -37,7 +41,7 @@ public class DownloadFileTest extends BaseTest {
 
     public boolean waitFileDownloaded(String directory, String fileName, int timeoutInSec) {
         for (int i = 0; i < timeoutInSec; i++) {
-            File file = new File(directory + "/" + fileName);
+            File file = new File(directory + "\\" + fileName);
             if (file.exists() & file.length() > 0) return true;
 
             try {
@@ -47,6 +51,22 @@ public class DownloadFileTest extends BaseTest {
             }
         }
         return false;
+    }
+
+    @Test
+    public void testCsvFileContent() throws IOException {
+        List<String> rows = Files.readAllLines(Paths.get(DOWNLOAD_FOLDER_PATH + "\\" + fileName));
+
+        Assert.assertFalse(rows.isEmpty(), "File is empty");
+
+        List<String> headers = Arrays.asList(rows.get(0).split(","));
+        List<String> expectedHeaders = Arrays.asList("Manufacturer Id", "Period", "Glass - Mixed", "Aluminium", "PET - Clear", "PET - Colour", "HDPE", "Liquid Paper Board", "Steel", "Other Materials");
+        Assert.assertEquals(headers, expectedHeaders, "CSV заголовки не відповідають очікуваним.");
+
+        String expectedRow1 = "QM20000003,M2022-11,10,20,30,40,5,6,7,8";
+
+        Assert.assertTrue(rows.contains(expectedRow1));
+
     }
 
 }
